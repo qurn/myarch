@@ -1,11 +1,16 @@
 #!/bin/bash
 
+#wifi-menu
+#vim /etc/pacman.d/mirrorlist
+#pacman -Syu
+#pacman -S git
+#git clone https://github.com/qurn/myarch.git
+
 ###############
 #Prepare
 ###############
 
 loadkeys de-latin1
-#wifi-menu
 
 echo "Enter username: "
 read USERNAME
