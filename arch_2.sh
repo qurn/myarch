@@ -67,6 +67,8 @@ options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet r
 mkinitcpio -p linux
 
 passwd
+echo "Enter username: "
+read USERNAME
 useradd -m -g users -G wheel,audio,video -s /bin/bash $USERNAME
 passwd $USERNAME
 visudo #wheel
