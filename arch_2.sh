@@ -1,5 +1,7 @@
 #!/bin/bash
 
+vim /etc/pacman.d/mirrorlist
+
 printf \
 "de_DE.UTF-8 UTF-8
 de_DE ISO-8859-1
@@ -24,6 +26,16 @@ systemctl enable dhcpcd.service
 
 pacman -Syu
 pkgfile -u
+pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
+    terminus-font ttf-dejavu urxvt-perls wget xorg-server xorg-xinit xorg-utils \
+    xorg-server-utils \
+    adwaita-icon-theme alsa-oss alsa-utils arduino \
+    android-tools dmenu eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
+    go gparted gvfs-mtp hunspell-de kolourpaint libreoffice-fresh \
+    libreoffice-fresh-de libmtp llpp lxappearance mtools nemo nemo-fileroller \
+    newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
+    pkgfile qutebrowser slock tor ttf-hannom vlc xfce4-appfinder \
+    xorg-xbacklight youtube-dl
 
 ###############
 #bootctl
@@ -33,7 +45,7 @@ bootctl install
 
 cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
 
-printf /
+printf \
 "MODULES=()
 BINARIES=()
 FILES=()
