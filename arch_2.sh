@@ -46,7 +46,7 @@ printf \
 "MODULES=()
 BINARIES=()
 FILES=()
-HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \ 
+HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \
 > /etc/mkinitcpio.conf
 
 printf \
