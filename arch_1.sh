@@ -5,7 +5,7 @@
 ###############
 
 loadkeys de-latin1
-wifi-menu
+#wifi-menu
 
 echo "Enter username: "
 read USERNAME
@@ -53,12 +53,12 @@ pacstrap /mnt dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 pacstrap /mnt dialog netctl wireless_tools wpa_actiond wpa_supplicant
 
 #extra
-pacstrap /mnt adwaita-icon-theme alsa-oss alsa-utils arduino android-adb \
+pacstrap /mnt adwaita-icon-theme alsa-oss alsa-utils arduino \
     android-tools dmenu eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
-    go gparted gvfs-mtp hunspell-de koloupaint libreoffice-fresh \
+    go gparted gvfs-mtp hunspell-de kolourpaint libreoffice-fresh \
     libreoffice-fresh-de libmtp llpp lxappearance mtools nemo nemo-fileroller \
     newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
-    pkgfile preload qutebrowser slock tor ttf-hannom vlc xfce4-appfinder \
+    pkgfile qutebrowser slock tor ttf-hannom vlc xfce4-appfinder \
     xorg-xbacklight youtube-dl
 
 #vbox
