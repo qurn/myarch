@@ -25,8 +25,7 @@ systemctl enable dhcpcd.service
 pacman -Syu
 pkgfile -u
 pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
-    terminus-font ttf-dejavu urxvt-perls wget xorg-server xorg-xinit xorg-utils \
-    xorg-server-utils \
+    terminus-font ttf-dejavu urxvt-perls wget xorg-server xorg-xinit \
     adwaita-icon-theme alsa-oss alsa-utils arduino \
     android-tools dmenu eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
     go gparted gvfs-mtp hunspell-de kolourpaint libreoffice-fresh \
