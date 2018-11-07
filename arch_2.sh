@@ -38,7 +38,7 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 #bootctl
 ###############
 
-bootctl install
+bootctl --path=/boot install
 
 cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
 
