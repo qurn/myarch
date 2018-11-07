@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#loadkeys de
 #wifi-menu
 #vim /etc/pacman.d/mirrorlist
 #pacman -Syu
@@ -43,8 +44,6 @@ mount $DRIVE\1 boot
 ###############
 #Install
 ###############
-
-vim /etc/pacman.d/mirrorlist
 
 #minimal
 pacstrap /mnt base base-devel gvim \
