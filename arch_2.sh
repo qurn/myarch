@@ -1,7 +1,5 @@
 #!/bin/bash
 
-vim /etc/pacman.d/mirrorlist
-
 printf \
 "de_DE.UTF-8 UTF-8
 de_DE ISO-8859-1
