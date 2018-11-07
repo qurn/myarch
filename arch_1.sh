@@ -43,10 +43,7 @@ vim /etc/pacman.d/mirrorlist
 
 #minimal
 pacstrap /mnt base base-devel gvim \
-    dialog netctl wireless_tools wpa_actiond wpa_supplicant
-
-#vbox
-#pacman -S virtualbox-guest-utils
+    dialog netctl wireless_tools wpa_actiond wpa_supplicant git virtualbox-guest-utils
 
 ###############
 #Setup
