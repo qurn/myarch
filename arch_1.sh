@@ -41,15 +41,8 @@ mount $DRIVE\1 boot
 #Install
 ###############
 
-vim /etc/pacman.d/mirrorlist
-
 pacstrap /mnt base base-devel gvim \
-    dialog netctl wireless_tools wpa_actiond wpa_supplicant git virtualbox-guest-utils
-
-#usual
-pacstrap /mnt dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
-    terminus-font ttf-dejavu urxvt-perls wget xorg-server xorg-xinit xorg-utils \
-    xorg-server-utils
+    dialog netctl wireless_tools wpa_actiond wpa_supplicant git
 
 ###############
 #Setup
