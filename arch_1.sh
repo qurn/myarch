@@ -42,7 +42,8 @@ mount $DRIVE\1 boot
 ###############
 
 pacstrap /mnt base base-devel gvim git \
-    dialog netctl wireless_tools wpa_actiond wpa_supplicant
+    iwd
+#    dialog netctl wireless_tools wpa_actiond wpa_supplicant
 
 ###############
 #Setup
