@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo "Enter username: "
+read USERNAME
+lsblk
+echo "Enter drive: (e.g.: /dev/sdb ) "
+read DRIVE
+
 printf \
 "de_DE.UTF-8 UTF-8
 de_DE ISO-8859-1
@@ -66,9 +72,22 @@ options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet r
 
 mkinitcpio -p linux
 
+###############
+#syslinux
+###############
+
+#pacman -S syslinux
+#
+#vim /boot/syslinux/syslinux.cfg
+#...
+#
+#syslinux-install_update -iam
+
+###############
+#users
+###############
+
 passwd
-echo "Enter username: "
-read USERNAME
 useradd -m -g users -G wheel,audio,video -s /bin/bash $USERNAME
 passwd $USERNAME
 visudo #wheel
