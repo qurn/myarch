@@ -2,6 +2,8 @@
 
 echo "Enter username: "
 read USERNAME
+echo "Enter hostname: "
+read HOSTNAME
 lsblk
 echo "Enter drive: (e.g.: /dev/sdb ) "
 read DRIVE
