@@ -42,6 +42,12 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
     pkgfile qutebrowser slock tor ttf-hannom vlc xfce4-appfinder \
     xorg-xbacklight youtube-dl
 
+
+###############
+#bootloader
+###############
+
+
 ###############
 #bootctl
 ###############
@@ -69,11 +75,24 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 #syslinux
 ###############
 
-#pacman -S syslinux
-#
-#vim /boot/syslinux/syslinux.cfg
-#
-#syslinux-install_update -iam
+pacman -S syslinux
+
+printf \
+"* BIOS: /boot/syslinux/syslinux.cfg
+* UEFI: esp/EFI/syslinux/syslinux.cfg
+
+PROMPT 0
+TIMEOUT 50
+DEFAULT arch
+
+LABEL arch
+	LINUX ../vmlinuz-linux
+	APPEND root=/dev/sda2 rw
+    APPEND root=/dev/mapper/cryptroot cryptdevice=/dev/sda2:cryptroot
+	INITRD ../initramfs-linux.img" \
+> /boot/syslinux/syslinux.cfg
+
+syslinux-install_update -iam
 
 ###############
 #syslinux and bootctl
