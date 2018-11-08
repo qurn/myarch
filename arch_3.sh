@@ -1,8 +1,10 @@
 #!/bin/bash
 
 #Neustart im system
-mkdir build
-cd build
+#mkdir build
+#cd build
+#git clone https://github.com/qurn/myarch.git
+
 mkdir suckless
 cd suckless
 git clone https://github.com/qurn/mydwm
