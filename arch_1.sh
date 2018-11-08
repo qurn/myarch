@@ -1,22 +1,12 @@
 #!/bin/bash
 
-#loadkeys de
-#wifi-menu
-#vim /etc/pacman.d/mirrorlist
-#pacman -Syu
-#pacman -S git
-#git clone https://github.com/qurn/myarch.git
-
 ###############
 #Prepare
 ###############
 
 loadkeys de-latin1
+wifi-menu
 
-echo "Enter username: "
-read USERNAME
-echo "Enter hostname: "
-read HOSTNAME
 ###############
 #Disk
 ###############
@@ -45,9 +35,30 @@ mount $DRIVE\1 boot
 #Install
 ###############
 
+vim /etc/pacman.d/mirrorlist
+
 #minimal
-pacstrap /mnt base base-devel gvim \
-    dialog netctl wireless_tools wpa_actiond wpa_supplicant git virtualbox-guest-utils
+pacstrap /mnt base base-devel gvim 
+
+#usual
+pacstrap /mnt dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
+    terminus-font ttf-dejavu urxvt-perls wget xorg-server xorg-xinit xorg-utils \
+    xorg-server-utils
+
+#wireless
+pacstrap /mnt dialog netctl wireless_tools wpa_actiond wpa_supplicant
+
+#extra
+pacstrap /mnt adwaita-icon-theme alsa-oss alsa-utils arduino android-adb \
+    android-tools dmenu eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
+    go gparted gvfs-mtp hunspell-de koloupaint libreoffice-fresh \
+    libreoffice-fresh-de libmtp llpp lxappearance mtools nemo nemo-fileroller \
+    newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
+    pkgfile preload qutebrowser slock tor ttf-hannom vlc xfce4-appfinder \
+    xorg-xbacklight youtube-dl
+
+#vbox
+#pacman -S virtualbox-guest-utils
 
 ###############
 #Setup
