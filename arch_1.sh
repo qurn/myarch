@@ -4,8 +4,14 @@
 #Prepare
 ###############
 
-loadkeys de-latin1
-wifi-menu
+#loadkeys de-latin1
+#wifi-menu
+#vim /etc/pacman.d/mirrorlist
+#pacman -Syu
+#pacman -S git
+#git clone https://github.com/qurn/myarch.git
+#cd myarch
+#bash arch_1.sh
 
 ###############
 #Disk
