@@ -51,13 +51,6 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 #cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
 #
 #printf \
-#"MODULES=()
-#BINARIES=()
-#FILES=()
-#HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \
-#> /etc/mkinitcpio.conf
-#
-#printf \
 #"timeout 0
 #default arch" \
 #> /boot/loader/loader.conf
@@ -71,8 +64,6 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 #initrd /initramfs-linux.img
 #options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
 #> /boot/loader/entries/arch.conf
-#
-#mkinitcpio -p linux
 
 ###############
 #syslinux
@@ -83,6 +74,19 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 #vim /boot/syslinux/syslinux.cfg
 #
 #syslinux-install_update -iam
+
+###############
+#syslinux and bootctl
+###############
+
+printf \
+"MODULES=()
+BINARIES=()
+FILES=()
+HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \
+> /etc/mkinitcpio.conf
+
+mkinitcpio -p linux
 
 ###############
 #users
