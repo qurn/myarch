@@ -46,33 +46,33 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 #bootctl
 ###############
 
-bootctl --path=/boot install
-
-cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
-
-printf \
-"MODULES=()
-BINARIES=()
-FILES=()
-HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \
-> /etc/mkinitcpio.conf
-
-printf \
-"timeout 0
-default arch" \
-> /boot/loader/loader.conf
-
-CRYPTUUID="$(blkid $DRIVE\2 | sed -r -n 's:.*\ UUID="([a-f0-9-]*).*:\1:p')"
-
-printf \
-"title Archlinux
-linux /vmlinuz-linux
-initrd /intel-ucode.img
-initrd /initramfs-linux.img
-options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
-> /boot/loader/entries/arch.conf
-
-mkinitcpio -p linux
+#bootctl --path=/boot install
+#
+#cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
+#
+#printf \
+#"MODULES=()
+#BINARIES=()
+#FILES=()
+#HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \
+#> /etc/mkinitcpio.conf
+#
+#printf \
+#"timeout 0
+#default arch" \
+#> /boot/loader/loader.conf
+#
+#CRYPTUUID="$(blkid $DRIVE\2 | sed -r -n 's:.*\ UUID="([a-f0-9-]*).*:\1:p')"
+#
+#printf \
+#"title Archlinux
+#linux /vmlinuz-linux
+#initrd /intel-ucode.img
+#initrd /initramfs-linux.img
+#options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
+#> /boot/loader/entries/arch.conf
+#
+#mkinitcpio -p linux
 
 ###############
 #syslinux
@@ -81,7 +81,6 @@ mkinitcpio -p linux
 #pacman -S syslinux
 #
 #vim /boot/syslinux/syslinux.cfg
-#...
 #
 #syslinux-install_update -iam
 
@@ -104,5 +103,3 @@ printf \
 snd-pcm-oss
 snd-mixer-oss" \
 > /etc/modules-load.d/alsaoss.conf
-
-exit
