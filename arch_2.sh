@@ -42,11 +42,9 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
     pkgfile qutebrowser slock tor ttf-hannom vlc xfce4-appfinder \
     xorg-xbacklight youtube-dl
 
-
 ###############
 #bootloader
 ###############
-
 
 ###############
 #bootctl
