@@ -1,10 +1,25 @@
 #!/bin/bash
 
-#Neustart im system
-#mkdir build
-#cd build
-#git clone https://github.com/qurn/myarch.git
+###############
+#Netwerk
+###############
 
+sudo systemctl enable iwd
+sudo systemctl start iwd
+
+printf \
+"[iwd]# device list
+[iwd]# station <interface> scan
+[iwd]# station <interface> get-networks
+[iwd]# station <interface> connect network_name"
+
+iwctl
+
+###############
+#git
+###############
+
+cd ..
 mkdir suckless
 cd suckless
 git clone https://github.com/qurn/mydwm
@@ -30,12 +45,11 @@ xset s noblank &
 xset s off &
 xset -dpms &
 exec dwm" \
-> ~/.xinitrx
+> ~/.xinitrc
 
-printf \n
-"[[ -f ~/.bashrc ]] && . ~/.bashrc
-if [ -z "\$DISPLAY" ] && [ -n "\$XDG_VTNR" ] && [ "\$XDG_VTNR" -eq 1 ]; then
-  exec startx
+printf \
+"if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+	exec startx
 fi" \
 > ~/.bash_profile
 
@@ -43,12 +57,14 @@ mkdir /etc/systemd/system/getty@tty1.service.d
 printf \
 "[Service]
 ExecStart=
-ExecStart=-/usr/bin/agetty --autologin username --noclear \%I \$TERM" \
+ExecStart=-/usr/bin/agetty --autologin $USER --noclear %%I \$TERM" \
 > /etc/systemd/system/getty@tty1.service.d/override.conf
+
 ################
 
+printf "uncomment #Color"
+sleep 2
 sudo vim /etc/pacman.conf
-Color
 
 #microcode https://wiki.archlinux.org/index.php/Microcode
 
@@ -66,24 +82,12 @@ lspci -k | grep -A 2 -E "(VGA|3D)"
 #nvidia
 #sudo pacman -S nvidia
 
-###############
-#Netwerk
-###############
-
-ls /etc/netctl
-sudo systemctl enable netctl-auto@<interf>.service
-
-cd /etc/netctl/
-netctl start wlp2s0-FRITZ\!Box\ 7362\ SLDFER 
-sudo netctl enable wlp2s0-FRITZ\!Box\ 7362\ SLDFER 
-sudo systemctl start netctl-ifplugd@wlp2s0.service
-sudo systemctl enable netctl-ifplugd@wlp2s0.service
-
 ######
 #special
 ######
-cd build
+cd ~/build
 git clone https://aur.archlinux.org/yay.git
+cd yay
 makepkg -sri
 
 ###############
@@ -99,6 +103,6 @@ sudo systemctl enable tor.service
 sudo systemctl start tor.service
 yay -S tor-browser 
 
-
+yay -S preload
 sudo systemctl start preload.service
 sudo systemctl enable preload.service
