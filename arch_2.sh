@@ -1,11 +1,22 @@
 #!/bin/bash
 
-echo "Enter username: "
+printf \
+"
+Enter username:
+"
 read USERNAME
-echo "Enter hostname: "
+
+printf \
+"
+Enter hostname:
+"
 read HOSTNAME
+
 lsblk
-echo "Enter drive: (e.g.: /dev/sdb ) "
+printf \
+"
+Enter drive: (e.g.: /dev/sda )
+"
 read DRIVE
 
 printf \
@@ -109,9 +120,23 @@ mkinitcpio -p linux
 #users
 ###############
 
+printf \
+"
+Enter root pw:
+"
 passwd
+printf \
+"
+Enter pw for user $USERNAME:
+"
 useradd -m -g users -G wheel,audio,video -s /bin/bash $USERNAME
 passwd $USERNAME
+
+printf \
+"
+uncomment wheel
+"
+sleep 2
 visudo #wheel
 
 gsettings set org.nemo.desktop show-desktop-icons false
