@@ -64,7 +64,7 @@ makepkg -sri
 ###############
 #additional services
 ###############
-sudo pacman -S cups system-config-printer
+sudo pacman -S --noconfirm --needed cups system-config-printer
 yay -S tor-browser preload epson-inkjet-printer-escpr
 
 sudo systemctl start org.cups.cupsd.service

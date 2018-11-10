@@ -43,7 +43,7 @@ systemctl enable dhcpcd.service
 
 pacman -Syu
 pkgfile -u
-pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
+pacman -S --noconfirm --needed dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
     terminus-font ttf-dejavu urxvt-perls wget xorg-server xorg-xinit \
     adwaita-icon-theme alsa-oss alsa-utils arduino \
     android-tools dmenu eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
@@ -84,7 +84,7 @@ pacman -S dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
 #syslinux
 ###############
 
-pacman -S syslinux
+pacman -S --noconfirm syslinux
 
 printf \
 "* BIOS: /boot/syslinux/syslinux.cfg
