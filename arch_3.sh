@@ -30,7 +30,7 @@ git clone https://github.com/qurn/myslstatus
 cd myslstatus
 vim config.h
 sudo make clean install
-cd ..
+cd ../..
 git clone https://github.com/qurn/dotfiles.git
 cd dotfiles
 bash move_files.sh
