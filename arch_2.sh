@@ -42,16 +42,21 @@ echo "127.0.0.1	$HOSTNAME.localdomain $HOSTNAME" >> /etc/hosts
 systemctl enable dhcpcd.service
 
 pacman -Syu
-pkgfile -u
-pacman -S --noconfirm --needed dunst firefox git gptfdisk intel-ucode iw ranger rxvt-unicode \
-    terminus-font ttf-dejavu urxvt-perls wget xorg-server xorg-xinit \
+pacman -S --noconfirm --needed dunst git intel-ucode iw ranger rxvt-unicode \
+    ttf-dejavu urxvt-perls wget xorg-server xorg-xinit \
+    alsa-oss alsa-utils dmenu \
+    tor ttf-hannom 
+
+pacman -S --needed firefox gptfdisk \
     adwaita-icon-theme alsa-oss alsa-utils arduino \
-    android-tools dmenu eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
+    android-tools eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
     go gparted gvfs-mtp hunspell-de kolourpaint libreoffice-fresh \
     libreoffice-fresh-de libmtp llpp lxappearance mtools nemo nemo-fileroller \
     newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
-    pkgfile qutebrowser slock tor ttf-hannom vlc xfce4-appfinder \
+    pkgfile qutebrowser slock vlc xfce4-appfinder \
     xorg-xbacklight youtube-dl
+
+pkgfile -u
 
 ###############
 #bootloader
