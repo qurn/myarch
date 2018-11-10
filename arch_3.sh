@@ -98,7 +98,6 @@ sudo systemctl start org.cups.cupsd.service
 sudo systemctl enable org.cups.cupsd.service
 yay -S epson-inkjet-printer-escpr
 
-
 sudo systemctl enable tor.service
 sudo systemctl start tor.service
 yay -S tor-browser 
