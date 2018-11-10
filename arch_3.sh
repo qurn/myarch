@@ -53,8 +53,8 @@ printf \
 fi" \
 > ~/.bash_profile
 
-mkdir /etc/systemd/system/getty@tty1.service.d
-printf \
+sudo mkdir /etc/systemd/system/getty@tty1.service.d
+sudo printf \
 "[Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin $USER --noclear %%I \$TERM" \
