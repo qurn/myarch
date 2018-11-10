@@ -132,6 +132,13 @@ Enter pw for user $USERNAME:
 useradd -m -g users -G wheel,audio,video -s /bin/bash $USERNAME
 passwd $USERNAME
 
+mkdir /etc/systemd/system/getty@tty1.service.d
+printf \
+"[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin $USERNAME --noclear %%I \$TERM" \
+> /etc/systemd/system/getty@tty1.service.d/override.conf
+
 printf \
 "
 uncomment wheel
