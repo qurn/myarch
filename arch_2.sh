@@ -55,6 +55,7 @@ pacman -S --needed firefox gptfdisk \
     newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
     pkgfile qutebrowser slock vlc xfce4-appfinder \
     xorg-xbacklight youtube-dl
+gsettings set org.nemo.desktop show-desktop-icons false
 
 pkgfile -u
 
@@ -151,7 +152,6 @@ uncomment wheel
 sleep 2
 visudo #wheel
 
-gsettings set org.nemo.desktop show-desktop-icons false
 
 ################
 #Sound
