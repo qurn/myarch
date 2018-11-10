@@ -36,6 +36,7 @@ printf \
 PW for setting up encryption
 "
 cryptsetup -y -v luksFormat $DRIVE\2
+printf \
 "
 PW for opening encrypted dirve
 "
