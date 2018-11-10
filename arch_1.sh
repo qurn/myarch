@@ -18,7 +18,10 @@
 ###############
 
 lsblk
-echo "Enter drive: (e.g.: /dev/sdb ) "
+printf \
+"
+Enter drive: (e.g.: /dev/sda ) 
+"
 read DRIVE
 
 sgdisk --zap-all $DRIVE
@@ -28,7 +31,14 @@ sgdisk --clear \
          $DRIVE
 mkfs.fat -F32 -n EFI $DRIVE\1
 
+printf \
+"
+PW for setting up encryption
+"
 cryptsetup -y -v luksFormat $DRIVE\2
+"
+PW for opening encrypted dirve
+"
 cryptsetup open $DRIVE\2 cryptroot
 
 mkfs.ext4 /dev/mapper/cryptroot
@@ -43,7 +53,6 @@ mount $DRIVE\1 boot
 
 pacstrap /mnt base base-devel gvim git \
     iwd
-#    dialog netctl wireless_tools wpa_actiond wpa_supplicant
 
 ###############
 #Setup
