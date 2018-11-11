@@ -45,13 +45,13 @@ pacman -Syu
 pacman -S --noconfirm --needed dunst git intel-ucode iw ranger rxvt-unicode \
     ttf-dejavu urxvt-perls wget xorg-server xorg-xinit \
     alsa-oss alsa-utils dmenu \
-    tor ttf-hannom 
+    tor ttf-hannom gptfdisk gvfs-mtp libmtp mtools 
 
-pacman -S --needed firefox gptfdisk \
+pacman -S --needed firefox \
     adwaita-icon-theme alsa-oss alsa-utils arduino \
     android-tools eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
-    go gparted gvfs-mtp hunspell-de kolourpaint libreoffice-fresh \
-    libreoffice-fresh-de libmtp llpp lxappearance mtools nemo nemo-fileroller \
+    go gparted hunspell-de kolourpaint libreoffice-fresh \
+    libreoffice-fresh-de llpp lxappearance nemo nemo-fileroller \
     newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
     pkgfile qutebrowser slock vlc xfce4-appfinder \
     xorg-xbacklight youtube-dl
