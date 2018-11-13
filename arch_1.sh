@@ -51,6 +51,8 @@ mount $DRIVE\1 boot
 ###############
 #Install
 ###############
+pacman -S pacman-contrib
+rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
 
 pacstrap /mnt base base-devel gvim git \
     iwd
