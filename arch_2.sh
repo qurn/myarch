@@ -44,12 +44,7 @@ systemctl enable dhcpcd.service
 
 pacman -Syu
 pacman -S --noconfirm pacman-contrib
-rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
-
-pacman -S --noconfirm --needed dunst git intel-ucode iw ranger rxvt-unicode \
-    ttf-dejavu urxvt-perls wget xorg-server xorg-xinit \
-    alsa-oss alsa-utils dmenu \
-    tor ttf-hannom gptfdisk gvfs-mtp libmtp mtools 
+#rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
 
 pacman -S --needed firefox \
     adwaita-icon-theme alsa-oss alsa-utils arduino \
@@ -58,7 +53,8 @@ pacman -S --needed firefox \
     libreoffice-fresh-de llpp lxappearance nemo nemo-fileroller \
     newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
     pkgfile qutebrowser slock vlc xfce4-appfinder \
-    xorg-xbacklight youtube-dl
+    xorg-xbacklight youtube-dl intel-ucode tor
+
 gsettings set org.nemo.desktop show-desktop-icons false
 
 pkgfile -u

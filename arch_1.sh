@@ -42,7 +42,9 @@ mkdir /mnt/boot
 mount $DRIVE\1 /mnt/boot
 
 #-------- Install
-pacstrap /mnt base base-devel gvim git iwd
+pacstrap /mnt alsa-oss alsa-utils base base-devel dmenu dunst git gptfdisk \
+gvfs-mtp gvim iw iwd libmtp mtools ranger rxvt-unicode ttf-dejavu ttf-hannom \
+urxvt-perls wget xorg-server xorg-xinit
 
 #-------- Setup
 genfstab -L -p /mnt >> /mnt/etc/fstab
@@ -51,10 +53,12 @@ mkdir /mnt/etc/myarch
 cp arch_2.sh /mnt/etc/myarch/
 cp arch_3.sh /mnt/etc/myarch/
 
+chmod +x /mnt/etc/myarch/arch_2.sh
+chmod +x /mnt/etc/myarch/arch_3.sh
 #arch-chroot /mnt
-arch-chroot /mnt /bin/bash -c "su - -c ./mnt/etc/myarch/arch_2.sh"
+arch-chroot /mnt /bin/bash -c "su - -c /etc/myarch/arch_2.sh"
 
 #now in skript 2
 
 umount -R /mnt
-reboot
+echo "unmounted /mnt"
