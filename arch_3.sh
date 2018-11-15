@@ -35,10 +35,6 @@ git clone https://github.com/qurn/dotfiles.git
 cd dotfiles
 bash move_files.sh
 
-printf "\nuncomment #Color\n"
-sleep 2
-sudo vim /etc/pacman.conf
-
 ################
 #grafic
 ################

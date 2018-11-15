@@ -138,6 +138,7 @@ Enter pw for user $USERNAME:
 useradd -m -g users -G wheel,audio,video -s /bin/bash $USERNAME
 passwd $USERNAME
 
+
 mkdir /etc/systemd/system/getty@tty1.service.d
 printf \
 "[Service]
@@ -145,13 +146,10 @@ ExecStart=
 ExecStart=-/usr/bin/agetty --autologin $USERNAME --noclear %%I \$TERM" \
 > /etc/systemd/system/getty@tty1.service.d/override.conf
 
-printf \
-"
-uncomment wheel
-"
-sleep 2
-visudo #wheel
 
+echo -e \
+"%wheel ALL=(ALL) ALL\\n%wheel ALL=(ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/packer -Syu,/usr/bin/packer -Syyu,/usr/bin/systemctl restart NetworkManager,/usr/bin/rc-service NetworkManager restart,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/yay,/usr/bin/pacman -Syyuw --noconfirm" \
+>> /etc/sudoers
 
 ################
 #Sound
@@ -161,3 +159,5 @@ printf \
 snd-pcm-oss
 snd-mixer-oss" \
 > /etc/modules-load.d/alsaoss.conf
+
+sed -i "s/^#Color/Color/g" /etc/pacman.conf
