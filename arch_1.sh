@@ -44,6 +44,7 @@ mkdir /mnt/boot
 mount $DRIVE\1 /mnt/boot
 
 #-------- Install
+pacman -Syu
 pacman -S pacman-contrib
 rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
 
