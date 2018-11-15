@@ -43,6 +43,9 @@ echo "127.0.0.1	$HOSTNAME.localdomain $HOSTNAME" >> /etc/hosts
 systemctl enable dhcpcd.service
 
 pacman -Syu
+pacman -S --noconfirm pacman-contrib
+rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
+
 pacman -S --noconfirm --needed dunst git intel-ucode iw ranger rxvt-unicode \
     ttf-dejavu urxvt-perls wget xorg-server xorg-xinit \
     alsa-oss alsa-utils dmenu \

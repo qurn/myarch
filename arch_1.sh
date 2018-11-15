@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #-------- Prepare
-
 #loadkeys de-latin1
 #wifi-menu
 #vim /etc/pacman.d/mirrorlist
@@ -12,7 +11,6 @@
 #bash arch_1.sh
 
 #-------- Disk
-
 lsblk
 printf \
 "
@@ -44,15 +42,9 @@ mkdir /mnt/boot
 mount $DRIVE\1 /mnt/boot
 
 #-------- Install
-pacman -Syu
-pacman -S pacman-contrib
-rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
-
-pacstrap /mnt base base-devel gvim git \
-    iwd
+pacstrap /mnt base base-devel gvim git iwd
 
 #-------- Setup
-
 genfstab -L -p /mnt >> /mnt/etc/fstab
 
 mkdir /mnt/etc/myarch
