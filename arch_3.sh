@@ -1,8 +1,6 @@
 #!/bin/bash
 
-###############
-#network
-###############
+#-------- network
 
 sudo systemctl enable iwd
 sudo systemctl start iwd
@@ -15,29 +13,35 @@ printf \
 
 iwctl
 
-###############
-#git
-###############
+#-------- git
 
-cd ..
-mkdir suckless
-cd suckless
-git clone https://github.com/qurn/mydwm
+mkdir ~/build/suckless
+
+cd ~/build/suckless
+git clone https://github.com/qurn/mydwm.git
 cd mydwm
 sudo make clean install
-cd ..
-git clone https://github.com/qurn/myslstatus
+
+cd ~/build/suckless
+git clone https://github.com/qurn/myslstatus.git
 cd myslstatus
 vim config.h
 sudo make clean install
-cd ../..
+
+cd ~/build
 git clone https://github.com/qurn/dotfiles.git
 cd dotfiles
 bash move_files.sh
 
-################
-#grafic
-################
+#-------- aur helper
+
+cd ~/build
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -sri
+
+#-------- grafic
+
 #check graficcard
 lspci -k | grep -A 2 -E "(VGA|3D)"
 
@@ -49,17 +53,7 @@ lspci -k | grep -A 2 -E "(VGA|3D)"
 #nvidia
 #sudo pacman -S nvidia
 
-######
-#aur package-manager
-######
-cd ~/build
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -sri
-
-###############
-#additional services
-###############
+#-------- additional services
 sudo pacman -S --noconfirm --needed cups system-config-printer
 yay -S tor-browser preload epson-inkjet-printer-escpr
 

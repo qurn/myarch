@@ -20,12 +20,13 @@ Enter drive: (e.g.: /dev/sda )
 read DRIVE
 
 printf \
-"de_DE.UTF-8 UTF-8
+"en_US ISO-8859-1
+en_US.UTF-8 UTF-8
 de_DE ISO-8859-1
 de_DE@euro ISO-8859-15" \
 > /etc/locale.gen
 
-echo LANG=de_DE.UTF-8 > /etc/locale.conf
+echo LANG=en_US.UTF-8 > /etc/locale.conf
 locale-gen
 
 printf \
@@ -59,13 +60,9 @@ gsettings set org.nemo.desktop show-desktop-icons false
 
 pkgfile -u
 
-###############
-#bootloader
-###############
+#-------- bootloader
 
-###############
-#bootctl
-###############
+#-------- bootctl
 
 #bootctl --path=/boot install
 #
@@ -86,9 +83,7 @@ pkgfile -u
 #options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
 #> /boot/loader/entries/arch.conf
 
-###############
-#syslinux
-###############
+#-------- syslinux
 
 pacman -S --noconfirm syslinux
 
@@ -109,9 +104,7 @@ LABEL arch
 
 syslinux-install_update -iam
 
-###############
-#syslinux and bootctl
-###############
+#-------- syslinux and bootctl
 
 printf \
 "MODULES=()
@@ -122,9 +115,7 @@ HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \
 
 mkinitcpio -p linux
 
-###############
-#users
-###############
+#-------- users
 
 printf \
 "

@@ -1,8 +1,6 @@
 #!/bin/bash
 
-###############
-#Prepare
-###############
+#-------- Prepare
 
 #loadkeys de-latin1
 #wifi-menu
@@ -13,9 +11,7 @@
 #cd myarch
 #bash arch_1.sh
 
-###############
-#Disk
-###############
+#-------- Disk
 
 lsblk
 printf \
@@ -44,26 +40,26 @@ cryptsetup open $DRIVE\2 cryptroot
 
 mkfs.ext4 /dev/mapper/cryptroot
 mount /dev/mapper/cryptroot /mnt
-cd /mnt
-mkdir boot
-mount $DRIVE\1 boot
+mkdir /mnt/boot
+mount $DRIVE\1 /mnt/boot
 
-###############
-#Install
-###############
+#-------- Install
 pacman -S pacman-contrib
 rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
 
 pacstrap /mnt base base-devel gvim git \
     iwd
 
-###############
-#Setup
-###############
+#-------- Setup
 
 genfstab -L -p /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt
+mkdir /mnt/etc/myarch
+cp arch_2.sh /mnt/etc/myarch/
+cp arch_3.sh /mnt/etc/myarch/
+
+#arch-chroot /mnt
+arch-chroot /mnt /bin/bash -c "su - -c ./mnt/etc/myarch/arch_2.sh"
 
 #now in skript 2
 
