@@ -150,7 +150,7 @@ cd dotfiles
 sudo -u $USERNAME bash move_files.sh
 
 #-------- aur helper
-cd home/$USERNAME/build
+cd /home/$USERNAME/build
 sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
 cd yay
 sudo -u $USERNAME makepkg -sri
