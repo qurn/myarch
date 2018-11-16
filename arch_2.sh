@@ -133,18 +133,18 @@ sed -i "s/^#Color/Color/g" /etc/pacman.conf
 sudo -u $USERNAME mkdir /home/$USERNAME/build
 sudo -u $USERNAME mkdir /home/$USERNAME/build/suckless
 
-cd home/$USERNAME/build/suckless
+cd /home/$USERNAME/build/suckless
 sudo -u $USERNAME git clone https://github.com/qurn/mydwm.git
 cd mydwm
 make clean install
 
-cd home/$USERNAME/build/suckless
+cd /home/$USERNAME/build/suckless
 sudo -u $USERNAME git clone https://github.com/qurn/myslstatus.git
 cd myslstatus
 sudo -u $USERNAME vim config.h
 make clean install
 
-cd home/$USERNAME/build
+cd /home/$USERNAME/build
 sudo -u $USERNAME git clone https://github.com/qurn/dotfiles.git
 cd dotfiles
 sudo -u $USERNAME bash move_files.sh
