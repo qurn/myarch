@@ -130,7 +130,8 @@ snd-mixer-oss" \
 sed -i "s/^#Color/Color/g" /etc/pacman.conf
 
 #-------- git
-sudo -u ffm mkdir home/$USERNAME/build/suckless
+sudo -u ffm mkdir /home/$USERNAME/build
+sudo -u ffm mkdir /home/$USERNAME/build/suckless
 
 cd home/$USERNAME/build/suckless
 sudo -u $USERNAME git clone https://github.com/qurn/mydwm.git
