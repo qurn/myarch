@@ -49,13 +49,11 @@ urxvt-perls wget xorg-server xorg-xinit
 genfstab -L -p /mnt >> /mnt/etc/fstab
 
 mkdir /mnt/etc/myarch
-cp arch_2.sh /mnt/etc/myarch/
-cp arch_3.sh /mnt/etc/myarch/
+cp inside_chroot.sh /mnt/etc/myarch/
 
-chmod +x /mnt/etc/myarch/arch_2.sh
-chmod +x /mnt/etc/myarch/arch_3.sh
+chmod +x /mnt/etc/myarch/inside_chroot.sh
 
-arch-chroot /mnt /bin/bash -c "su - -c /etc/myarch/arch_2.sh"
+arch-chroot /mnt /bin/bash -c "su - -c /etc/myarch/inside_chroot.sh"
 
 #now in skript 2
 
