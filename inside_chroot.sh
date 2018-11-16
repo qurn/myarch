@@ -43,7 +43,7 @@ echo "127.0.0.1	$HOSTNAME.localdomain $HOSTNAME" >> /etc/hosts
 #-------- bootloader
 echo "What bootloader?"
 select bs in "bootctl" "syslinux"; do
-    case $ain in
+    case $bs in
         bootctl ) 
             bootctl --path=/boot install
             
@@ -165,8 +165,8 @@ sudo -u $USERNAME yay -S tor-browser preload epson-inkjet-printer-escpr
 lspci -k | grep -A 2 -E "(VGA|3D)"
 
 echo "What grafic card?"
-select aind in "ati" "intel" "nvidia" "none"; do
-    case $ain in
+select aind in "ati" "intel" "nvidia" "dont"; do
+    case $aind in
         ati ) 
             pacman -Sy --needed --noconfirm mesa xf86-video-ati;
             break;;
