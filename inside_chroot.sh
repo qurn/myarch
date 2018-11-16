@@ -39,52 +39,56 @@ ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 echo $HOSTNAME > /etc/hostname
 echo "127.0.0.1	$HOSTNAME.localdomain $HOSTNAME" >> /etc/hosts
 
-#wired
-systemctl enable dhcpcd.service
 
 #-------- bootloader
+echo "What bootloader?"
+select bs in "bootctl" "syslinux"; do
+    case $ain in
+        bootctl ) 
+            bootctl --path=/boot install
+            
+            cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
+            
+            printf \
+            "timeout 0
+            default arch" \
+            > /boot/loader/loader.conf
+            
+            CRYPTUUID="$(blkid $DRIVE\2 | sed -r -n 's:.*\ UUID="([a-f0-9-]*).*:\1:p')"
+            
+            printf \
+            "title Archlinux
+            linux /vmlinuz-linux
+            initrd /intel-ucode.img
+            initrd /initramfs-linux.img
+            options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
+            > /boot/loader/entries/arch.conf
 
-#-------- bootctl
-#bootctl --path=/boot install
-#
-#cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
-#
-#printf \
-#"timeout 0
-#default arch" \
-#> /boot/loader/loader.conf
-#
-#CRYPTUUID="$(blkid $DRIVE\2 | sed -r -n 's:.*\ UUID="([a-f0-9-]*).*:\1:p')"
-#
-#printf \
-#"title Archlinux
-#linux /vmlinuz-linux
-#initrd /intel-ucode.img
-#initrd /initramfs-linux.img
-#options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
-#> /boot/loader/entries/arch.conf
+            break;;
+        syslinux ) 
+            pacman -Sy --noconfirm syslinux
+            
+            printf \
+            "* BIOS: /boot/syslinux/syslinux.cfg
+            * UEFI: esp/EFI/syslinux/syslinux.cfg
+            
+            PROMPT 0
+            TIMEOUT 50
+            DEFAULT arch
+            
+            LABEL arch
+            	LINUX ../vmlinuz-linux
+            	APPEND root=$DRIVE\2 rw
+                APPEND root=/dev/mapper/cryptroot cryptdevice=/dev/sda2:cryptroot
+            	INITRD ../initramfs-linux.img" \
+            > /boot/syslinux/syslinux.cfg
+            
+            syslinux-install_update -iam
+            break;;
+    esac
+done
 
-#-------- syslinux
-pacman -Sy --noconfirm syslinux
-
-printf \
-"* BIOS: /boot/syslinux/syslinux.cfg
-* UEFI: esp/EFI/syslinux/syslinux.cfg
-
-PROMPT 0
-TIMEOUT 50
-DEFAULT arch
-
-LABEL arch
-	LINUX ../vmlinuz-linux
-	APPEND root=/dev/sda2 rw
-    APPEND root=/dev/mapper/cryptroot cryptdevice=/dev/sda2:cryptroot
-	INITRD ../initramfs-linux.img" \
-> /boot/syslinux/syslinux.cfg
-
-syslinux-install_update -iam
-
-#-------- syslinux and bootctl
+#-------- add encrypt for syslinux and bootctl
 printf \
 "MODULES=()
 BINARIES=()
@@ -120,7 +124,7 @@ echo -e \
 "%wheel ALL=(ALL) ALL\\n%wheel ALL=(ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/packer -Syu,/usr/bin/packer -Syyu,/usr/bin/systemctl restart NetworkManager,/usr/bin/rc-service NetworkManager restart,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/yay,/usr/bin/pacman -Syyuw --noconfirm" \
 >> /etc/sudoers
 
-#-------- Sound for slstatus
+#-------- sound for slstatus
 printf \
 "snd-seq-oss
 snd-pcm-oss
@@ -158,52 +162,91 @@ sudo -u $USERNAME makepkg -sri
 sudo -u $USERNAME yay -S tor-browser preload epson-inkjet-printer-escpr
 
 #-------- grafic
-#check graficcard
-#lspci -k | grep -A 2 -E "(VGA|3D)"
+lspci -k | grep -A 2 -E "(VGA|3D)"
 
-#ati
-#sudo pacman -S mesa xf86-video-ati
-#Intel
-#sudo pacman -S mesa xf86-video-intel libva-intel-driver
-
-#nvidia
-#sudo pacman -S nvidia
-
+echo "What grafic card?"
+select aind in "ati" "intel" "nvidia" "none"; do
+    case $ain in
+        ati ) 
+            pacman -Sy --needed --noconfirm mesa xf86-video-ati;
+            break;;
+        intel ) 
+            pacman -Sy --needed --noconfirm mesa xf86-video-intel libva-intel-driver
+            break;;
+        nvidia ) 
+            pacman -Sy --needed --noconfirm nvidia
+            break;;
+        none ) 
+            break;;
+    esac
+done
 
 ##-------- additional services
-#pacman -Sy --needed adwaita-icon-theme alsa-oss alsa-utils android-tools arduino \
-#    cups eog faenza-icon-theme firefox gnome-disk-utility gnome-screenshot go gparted \
-#    hunspell-de intel-ucode kolourpaint libreoffice-fresh libreoffice-fresh-de \
-#    llpp lxappearance nemo nemo-fileroller newsboat octave okular orage \
-#    pavucontrol pidgin pidgin-libnotify pidgin-otr pkgfile qutebrowser \
-#    system-config-printer slock tor vlc xfce4-appfinder xorg-xbacklight youtube-dl
-#
-#
-##pacman -S --noconfirm pacman-contrib
-##rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
-#
-#systemctl start org.cups.cupsd.service
-#systemctl enable org.cups.cupsd.service
-#
-#systemctl start tor.service
-#systemctl enable tor.service
-#
-#systemctl start preload.service
-#systemctl enable preload.service
+while true; do
+    read -p $'Add big software? Y/N\n' yn
+    case $yn in
+        [Yy]* ) 
+            pacman -Sy --needed --noconfirm adwaita-icon-theme alsa-oss alsa-utils android-tools arduino \
+                cups eog faenza-icon-theme firefox gnome-disk-utility gnome-screenshot go gparted \
+                hunspell-de intel-ucode kolourpaint libreoffice-fresh libreoffice-fresh-de \
+                llpp lxappearance nemo nemo-fileroller newsboat octave okular orage \
+                pavucontrol pidgin pidgin-libnotify pidgin-otr pkgfile qutebrowser \
+                system-config-printer slock tor vlc xfce4-appfinder xorg-xbacklight youtube-dl
+
+            systemctl enable org.cups.cupsd.service
+            systemctl enable tor.service
+            gsettings set org.nemo.desktop show-desktop-icons false
+            pkgfile -u
+            break;;
+        [Nn]* ) 
+            break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+while true; do
+    read -p $'Add preload? Y/N\n' yn
+    case $yn in
+        [Yy]* ) 
+            yay -S preload
+            systemctl enable preload.service
+            break;;
+        [Nn]* ) 
+            break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+echo "What kind of machine is this?"
+select vlt in "virtualbox" "laptop" "tower" ; do
+    case $ain in
+        virtualbox ) 
+            pacman -Sy --needed --noconfirm virtualbox-guest-modules-arch virtualbox-guest-utils
+            systemctl enable vboxservice.service
+            systemctl enable dhcpcd.service
+            break;;
+        laptop ) 
+            pacman -Sy --needed --noconfirm iwd
+            systemctl enable iwd
+            break;;
+        tower ) 
+            systemctl enable dhcpcd.service
+            break;;
+    esac
+done
+
+while true; do
+    read -p $'Rank mirrors? Y/N\n' yn
+    case $yn in
+        [Yy]* ) 
+            pacman -Sy --noconfirm pacman-contrib
+            curl -s "https://www.archlinux.org/mirrorlist/?country=FR&country=GB&country=DE&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 10 - > /etc/pacman.d/mirrorlist
+            break;;
+        [Nn]* ) 
+            break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 #
 ##microcode https://wiki.archlinux.org/index.php/Microcode
-#
-#gsettings set org.nemo.desktop show-desktop-icons false
-#
-#pkgfile -u
-##-------- network
-#sudo systemctl enable iwd
-#sudo systemctl start iwd
-#
-#printf \
-#"[iwd]# device list
-#[iwd]# station <interface> scan
-#[iwd]# station <interface> get-networks
-#[iwd]# station <interface> connect network_name"
-#
-#iwctl
