@@ -153,34 +153,6 @@ sudo -u $USERNAME git clone https://github.com/qurn/dotfiles.git
 cd dotfiles
 sudo -u $USERNAME bash move_files.sh
 
-#-------- aur helper
-cd /home/$USERNAME/build
-sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
-cd yay
-sudo -u $USERNAME makepkg -sri
-
-sudo -u $USERNAME yay -S tor-browser preload epson-inkjet-printer-escpr
-
-#-------- grafic
-lspci -k | grep -A 2 -E "(VGA|3D)"
-
-echo "What grafic card?"
-select aind in "ati" "intel" "nvidia" "dont"; do
-    case $aind in
-        ati ) 
-            pacman -Sy --needed --noconfirm mesa xf86-video-ati;
-            break;;
-        intel ) 
-            pacman -Sy --needed --noconfirm mesa xf86-video-intel libva-intel-driver
-            break;;
-        nvidia ) 
-            pacman -Sy --needed --noconfirm nvidia
-            break;;
-        none ) 
-            break;;
-    esac
-done
-
 ##-------- additional services
 while true; do
     read -p $'Add big software? Y/N\n' yn
@@ -197,6 +169,14 @@ while true; do
             systemctl enable tor.service
             gsettings set org.nemo.desktop show-desktop-icons false
             pkgfile -u
+
+            #-------- aur helper
+            cd /home/$USERNAME/build
+            sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
+            cd yay
+            sudo -u $USERNAME makepkg -sri
+            sudo -u $USERNAME yay -S tor-browser preload epson-inkjet-printer-escpr
+            systemctl enable preload.service
             break;;
         [Nn]* ) 
             break;;
@@ -204,16 +184,23 @@ while true; do
     esac
 done
 
-while true; do
-    read -p $'Add preload? Y/N\n' yn
-    case $yn in
-        [Yy]* ) 
-            yay -S preload
-            systemctl enable preload.service
+#-------- grafic
+lspci -k | grep -A 2 -E "(VGA|3D)"
+
+echo "What grafic card?"
+select aind in "ati" "intel" "nvidia" "dont"; do
+    case $aind in
+        ati ) 
+            pacman -Sy --needed --noconfirm mesa xf86-video-ati;
             break;;
-        [Nn]* ) 
+        intel ) 
+            pacman -Sy --needed --noconfirm mesa xf86-video-intel libva-intel-driver
             break;;
-        * ) echo "Please answer yes or no.";;
+        nvidia ) 
+            pacman -Sy --needed --noconfirm nvidia
+            break;;
+        dont ) 
+            break;;
     esac
 done
 
