@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #-------- network
-
 sudo systemctl enable iwd
 sudo systemctl start iwd
 
@@ -14,7 +13,6 @@ printf \
 iwctl
 
 #-------- git
-
 mkdir ~/build/suckless
 
 cd ~/build/suckless
@@ -34,14 +32,13 @@ cd dotfiles
 bash move_files.sh
 
 #-------- aur helper
-
 cd ~/build
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -sri
 
+yay -S tor-browser preload epson-inkjet-printer-escpr
 #-------- grafic
-
 #check graficcard
 lspci -k | grep -A 2 -E "(VGA|3D)"
 
@@ -53,17 +50,3 @@ lspci -k | grep -A 2 -E "(VGA|3D)"
 #nvidia
 #sudo pacman -S nvidia
 
-#-------- additional services
-sudo pacman -S --noconfirm --needed cups system-config-printer
-yay -S tor-browser preload epson-inkjet-printer-escpr
-
-sudo systemctl start org.cups.cupsd.service
-sudo systemctl enable org.cups.cupsd.service
-
-sudo systemctl start tor.service
-sudo systemctl enable tor.service
-
-sudo systemctl start preload.service
-sudo systemctl enable preload.service
-
-#microcode https://wiki.archlinux.org/index.php/Microcode

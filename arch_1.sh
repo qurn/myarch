@@ -4,8 +4,7 @@
 #loadkeys de-latin1
 #wifi-menu
 #vim /etc/pacman.d/mirrorlist
-#pacman -Syu
-#pacman -S git
+#pacman -Sy git
 #git clone https://github.com/qurn/myarch.git
 #cd myarch
 #bash arch_1.sh
@@ -55,10 +54,12 @@ cp arch_3.sh /mnt/etc/myarch/
 
 chmod +x /mnt/etc/myarch/arch_2.sh
 chmod +x /mnt/etc/myarch/arch_3.sh
-#arch-chroot /mnt
+
 arch-chroot /mnt /bin/bash -c "su - -c /etc/myarch/arch_2.sh"
 
 #now in skript 2
 
 umount -R /mnt
-echo "unmounted /mnt"
+printf "unmounted /mnt
+
+you can reboot or poweroff"

@@ -42,27 +42,9 @@ echo "127.0.0.1	$HOSTNAME.localdomain $HOSTNAME" >> /etc/hosts
 #wired
 systemctl enable dhcpcd.service
 
-pacman -Syu
-pacman -S --noconfirm pacman-contrib
-#rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
-
-pacman -S --needed firefox \
-    adwaita-icon-theme alsa-oss alsa-utils arduino \
-    android-tools eog faenza-icon-theme gnome-disk-utility gnome-screenshot \
-    go gparted hunspell-de kolourpaint libreoffice-fresh \
-    libreoffice-fresh-de llpp lxappearance nemo nemo-fileroller \
-    newsboat octave okular orage pavucontrol pidgin pidgin-otr pidgin-libnotify \
-    pkgfile qutebrowser slock vlc xfce4-appfinder \
-    xorg-xbacklight youtube-dl intel-ucode tor
-
-gsettings set org.nemo.desktop show-desktop-icons false
-
-pkgfile -u
-
 #-------- bootloader
 
 #-------- bootctl
-
 #bootctl --path=/boot install
 #
 #cp /etc/mkinitcpio.conf /etc/mkinitcpio.confBAK
@@ -83,8 +65,7 @@ pkgfile -u
 #> /boot/loader/entries/arch.conf
 
 #-------- syslinux
-
-pacman -S --noconfirm syslinux
+pacman -Sy --noconfirm syslinux
 
 printf \
 "* BIOS: /boot/syslinux/syslinux.cfg
@@ -104,7 +85,6 @@ LABEL arch
 syslinux-install_update -iam
 
 #-------- syslinux and bootctl
-
 printf \
 "MODULES=()
 BINARIES=()
@@ -115,7 +95,6 @@ HOOKS=(base udev autodetect modconf block filesystems keyboard encrypt fsck)" \
 mkinitcpio -p linux
 
 #-------- users
-
 printf \
 "
 Enter root pw:
@@ -141,9 +120,7 @@ echo -e \
 "%wheel ALL=(ALL) ALL\\n%wheel ALL=(ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/packer -Syu,/usr/bin/packer -Syyu,/usr/bin/systemctl restart NetworkManager,/usr/bin/rc-service NetworkManager restart,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/yay,/usr/bin/pacman -Syyuw --noconfirm" \
 >> /etc/sudoers
 
-################
-#Sound
-################
+#-------- Sound for slstatus
 printf \
 "snd-seq-oss
 snd-pcm-oss
@@ -151,3 +128,30 @@ snd-mixer-oss" \
 > /etc/modules-load.d/alsaoss.conf
 
 sed -i "s/^#Color/Color/g" /etc/pacman.conf
+
+##-------- additional services
+#pacman -Sy --needed adwaita-icon-theme alsa-oss alsa-utils android-tools arduino \
+#    cups eog faenza-icon-theme firefox gnome-disk-utility gnome-screenshot go gparted \
+#    hunspell-de intel-ucode kolourpaint libreoffice-fresh libreoffice-fresh-de \
+#    llpp lxappearance nemo nemo-fileroller newsboat octave okular orage \
+#    pavucontrol pidgin pidgin-libnotify pidgin-otr pkgfile qutebrowser \
+#    system-config-printer slock tor vlc xfce4-appfinder xorg-xbacklight youtube-dl
+#
+#
+##pacman -S --noconfirm pacman-contrib
+##rankmirrors -n 10 /etc/pacman.d/mirrorlist > /etc/pacman.d/mirrorlist
+#
+#systemctl start org.cups.cupsd.service
+#systemctl enable org.cups.cupsd.service
+#
+#systemctl start tor.service
+#systemctl enable tor.service
+#
+#systemctl start preload.service
+#systemctl enable preload.service
+#
+##microcode https://wiki.archlinux.org/index.php/Microcode
+#
+#gsettings set org.nemo.desktop show-desktop-icons false
+#
+#pkgfile -u
