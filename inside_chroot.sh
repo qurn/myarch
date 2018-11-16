@@ -206,7 +206,7 @@ done
 
 echo "What kind of machine is this?"
 select vlt in "virtualbox" "laptop" "tower" ; do
-    case $ain in
+    case $vlt in
         virtualbox ) 
             pacman -Sy --needed --noconfirm virtualbox-guest-modules-arch virtualbox-guest-utils
             systemctl enable vboxservice.service
