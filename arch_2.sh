@@ -129,6 +129,46 @@ snd-mixer-oss" \
 
 sed -i "s/^#Color/Color/g" /etc/pacman.conf
 
+#-------- git
+sudo -u ffm mkdir home/$USERNAME/build/suckless
+
+cd home/$USERNAME/build/suckless
+sudo -u $USERNAME git clone https://github.com/qurn/mydwm.git
+cd mydwm
+make clean install
+
+cd home/$USERNAME/build/suckless
+sudo -u $USERNAME git clone https://github.com/qurn/myslstatus.git
+cd myslstatus
+sudo -u $USERNAME vim config.h
+make clean install
+
+cd home/$USERNAME/build
+sudo -u $USERNAME git clone https://github.com/qurn/dotfiles.git
+cd dotfiles
+sudo -u $USERNAME bash move_files.sh
+
+#-------- aur helper
+cd home/$USERNAME/build
+sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
+cd yay
+sudo -u $USERNAME makepkg -sri
+
+sudo -u $USERNAME yay -S tor-browser preload epson-inkjet-printer-escpr
+
+#-------- grafic
+#check graficcard
+#lspci -k | grep -A 2 -E "(VGA|3D)"
+
+#ati
+#sudo pacman -S mesa xf86-video-ati
+#Intel
+#sudo pacman -S mesa xf86-video-intel libva-intel-driver
+
+#nvidia
+#sudo pacman -S nvidia
+
+
 ##-------- additional services
 #pacman -Sy --needed adwaita-icon-theme alsa-oss alsa-utils android-tools arduino \
 #    cups eog faenza-icon-theme firefox gnome-disk-utility gnome-screenshot go gparted \
@@ -155,3 +195,14 @@ sed -i "s/^#Color/Color/g" /etc/pacman.conf
 #gsettings set org.nemo.desktop show-desktop-icons false
 #
 #pkgfile -u
+##-------- network
+#sudo systemctl enable iwd
+#sudo systemctl start iwd
+#
+#printf \
+#"[iwd]# device list
+#[iwd]# station <interface> scan
+#[iwd]# station <interface> get-networks
+#[iwd]# station <interface> connect network_name"
+#
+#iwctl
