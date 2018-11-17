@@ -12,12 +12,7 @@ Enter hostname:
 "
 read HOSTNAME
 
-lsblk
-printf \
-"
-Enter drive: (e.g.: /dev/sda )
-"
-read DRIVE
+DRIVENAME_REPLACE
 
 printf \
 "en_US ISO-8859-1

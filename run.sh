@@ -17,6 +17,9 @@ Enter drive: (e.g.: /dev/sda )
 "
 read DRIVE
 
+#tell inside_chroot the drivename
+sed -i "s#DRIVENAME_REPLACE#DRIVE=\"$DRIVE\"#" inside_chroot.sh
+
 sgdisk --zap-all $DRIVE
 sgdisk --clear \
        --new=1:0:+550MiB --typecode=1:ef00 --change-name=1:EFI \
