@@ -157,7 +157,7 @@ while true; do
                 cups eog faenza-icon-theme firefox gnome-disk-utility gnome-screenshot go gparted \
                 hunspell-de intel-ucode kolourpaint libreoffice-fresh libreoffice-fresh-de \
                 llpp lxappearance nemo nemo-fileroller newsboat octave okular orage \
-                pavucontrol pidgin pidgin-libnotify pidgin-otr pkgfile qutebrowser \
+                pavucontrol pidgin pidgin-libnotify pidgin-otr pkgfile qutebrowser sane \
                 system-config-printer slock tor vlc xfce4-appfinder xorg-xbacklight youtube-dl
 
             systemctl enable org.cups.cupsd.service
@@ -170,7 +170,7 @@ while true; do
             sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
             cd yay
             sudo -u $USERNAME makepkg -sri
-            sudo -u $USERNAME yay -S tor-browser preload epson-inkjet-printer-escpr
+            sudo -u $USERNAME yay -S epson-inkjet-printer-escpr imagescan preload tor-browser xbanish
             systemctl enable preload.service
             break;;
         [Nn]* ) 
