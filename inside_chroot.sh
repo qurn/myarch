@@ -169,8 +169,8 @@ while true; do
             cd /home/$USERNAME/build
             sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
             cd yay
-            sudo -u $USERNAME makepkg -sri
-            sudo -u $USERNAME yay -S --noconfirm epson-inkjet-printer-escpr imagescan preload tor-browser xbanish
+            sudo -u $USERNAME makepkg -sri --noconfirm
+            sudo -u $USERNAME yay -S --noconfirm epson-inkjet-printer-escpr imagescan preload xbanish
             systemctl enable preload.service
             break;;
         [Nn]* ) 
@@ -206,6 +206,7 @@ select vlt in "virtualbox" "laptop" "tower" ; do
             pacman -Sy --needed --noconfirm virtualbox-guest-modules-arch virtualbox-guest-utils
             systemctl enable vboxservice.service
             systemctl enable dhcpcd.service
+			usermod -aG vboxsf $USERNAME
             break;;
         laptop ) 
             pacman -Sy --needed --noconfirm iwd
