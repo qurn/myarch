@@ -206,7 +206,8 @@ select vlt in "virtualbox" "laptop" "tower" ; do
             pacman -Sy --needed --noconfirm virtualbox-guest-modules-arch virtualbox-guest-utils
             systemctl enable vboxservice.service
             systemctl enable dhcpcd.service
-			usermod -aG vboxsf $USERNAME
+            systemctl enable vboxservice.service
+            gpasswd -a $USERNAME vboxsf
             break;;
         laptop ) 
             pacman -Sy --needed --noconfirm iwd
