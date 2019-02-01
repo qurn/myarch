@@ -170,7 +170,7 @@ while true; do
             sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
             cd yay
             sudo -u $USERNAME makepkg -sri --noconfirm
-            sudo -u $USERNAME yay -S --noconfirm epson-inkjet-printer-escpr imagescan preload xbanish
+            sudo -u $USERNAME yay -S --noconfirm epson-inkjet-printer-escpr imagescan preload task-spooler xbanish
             systemctl enable preload.service
             break;;
         [Nn]* ) 
