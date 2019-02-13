@@ -153,12 +153,17 @@ while true; do
     read -p $'Add big software? Y/N\n' yn
     case $yn in
         [Yy]* ) 
-            pacman -Sy --needed --noconfirm adwaita-icon-theme alsa-oss alsa-utils android-tools arduino \
-                cups eog faenza-icon-theme firefox gnome-disk-utility gnome-screenshot go gparted \
-                hunspell-de intel-ucode kolourpaint libreoffice-fresh libreoffice-fresh-de \
-                llpp lxappearance nemo nemo-fileroller newsboat octave okular orage \
-                pavucontrol pidgin pidgin-libnotify pidgin-otr pkgfile qutebrowser sane \
-                system-config-printer slock tor vlc xfce4-appfinder xorg-xbacklight youtube-dl
+            pacman -Sy --needed --noconfirm adwaita-icon-theme alsa-oss alsa-utils \
+                android-tools arduino cups eog faenza-icon-theme fd flake8 firefox \
+                gnome-disk-utility gnome-screenshot go gparted gzip hunspell-de \
+                intel-ucode imagemagick kolourpaint libreoffice-fresh libreoffice-fresh-de \
+                llpp lxappearance mpv nemo nemo-fileroller newsboat octave okular \
+                orage pavucontrol pidgin pidgin-libnotify pidgin-otr poppler \
+                poppler-data poppler-glib poppler-qt5 pkgfile pygtk pyqt5-common \
+                pyqtwebengine pyside-tools-common python python-matplotlib \
+                python-dbus python-dbus-common python-pep517 python-pip qutebrowser \
+                ripgrep sane system-config-printer slock tor vlc xfce4-appfinder \
+                xorg-xbacklight youtube-dl
 
             systemctl enable org.cups.cupsd.service
             systemctl enable tor.service
