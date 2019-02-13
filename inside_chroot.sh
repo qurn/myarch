@@ -215,6 +215,7 @@ select vlt in "virtualbox" "laptop" "tower" ; do
             gpasswd -a $USERNAME vboxsf
             break;;
         laptop ) 
+            #wifi
             pacman -Sy --needed --noconfirm iwd
             systemctl enable iwd
             break;;
