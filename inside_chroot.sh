@@ -49,15 +49,21 @@ select bs in "bootctl" "syslinux"; do
             default arch" \
             > /boot/loader/loader.conf
             
-            CRYPTUUID="$(blkid $DRIVE\2 | sed -r -n 's:.*\ UUID="([a-f0-9-]*).*:\1:p')"
+            CRYPTUUID="$(blkid $DRIVE\2)"
             
+            pacman -Sy --noconfirm intel-ucode
+	    
             printf \
             "title Archlinux
             linux /vmlinuz-linux
             initrd /intel-ucode.img
             initrd /initramfs-linux.img
-            options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
+            options cryptdevice=UUID=  CRYPTUUID  :cryptroot root=/dev/mapper/cryptroot quiet rw" \
+
+		    $CRYPTUUID
+
             > /boot/loader/entries/arch.conf
+            vim /boot/loader/entries/arch.conf
 
             break;;
         syslinux ) 
@@ -160,10 +166,9 @@ while true; do
                 llpp lxappearance mpv nemo nemo-fileroller newsboat octave okular \
                 orage pavucontrol pidgin pidgin-libnotify pidgin-otr poppler \
                 poppler-data poppler-glib poppler-qt5 pkgfile pygtk pyqt5-common \
-                pyqtwebengine pyside-tools-common python python-matplotlib \
-                python-dbus python-dbus-common python-pep517 python-pip qutebrowser \
-                ripgrep sane system-config-printer slock tor vlc xfce4-appfinder \
-                xorg-xbacklight youtube-dl
+                python python-matplotlib python-dbus python-dbus-common python-pep517 \
+		python-pip qutebrowser ripgrep sane system-config-printer slock tor vlc \
+		xfce4-appfinder xorg-xbacklight youtube-dl
 
             systemctl enable org.cups.cupsd.service
             systemctl enable tor.service
