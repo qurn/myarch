@@ -13,6 +13,14 @@ Enter hostname:
 read HOSTNAME
 
 DRIVENAME_REPLACE
+re='[0-9]'
+if ! [[ ${DRIVE: -1} =~ $re ]] ; then
+    PARTBOOT=$DRIVE\p1
+    PARTBOOT=$DRIVE\p2
+else
+    PARTBOOT=$DRIVE\1
+    PARTBOOT=$DRIVE\2
+fi
 
 printf \
 "en_US ISO-8859-1
@@ -49,7 +57,7 @@ select bs in "bootctl" "syslinux"; do
             default arch" \
             > /boot/loader/loader.conf
             
-            CRYPTUUID="$(blkid $DRIVE\2)"
+            CRYPTUUID="$(blkid $PARTBOOT)"
             
             pacman -Sy --noconfirm intel-ucode
 	    
@@ -79,7 +87,7 @@ select bs in "bootctl" "syslinux"; do
             
             LABEL arch
             	LINUX ../vmlinuz-linux
-            	APPEND root=$DRIVE\2 rw
+            	APPEND root=$PARTBOOT rw
                 APPEND root=/dev/mapper/cryptroot cryptdevice=/dev/sda2:cryptroot
             	INITRD ../initramfs-linux.img" \
             > /boot/syslinux/syslinux.cfg

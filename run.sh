@@ -17,6 +17,15 @@ Enter drive: (e.g.: /dev/sda )
 "
 read DRIVE
 
+re='[0-9]'
+if ! [[ ${DRIVE: -1} =~ $re ]] ; then
+    PARTBOOT=$DRIVE\p1
+    PARTROOT=$DRIVE\p2
+else
+    PARTBOOT=$DRIVE\1
+    PARTROOT=$DRIVE\2
+fi
+
 #tell inside_chroot the drivename
 sed -i "s#DRIVENAME_REPLACE#DRIVE=\"$DRIVE\"#" inside_chroot.sh
 
@@ -25,23 +34,24 @@ sgdisk --clear \
        --new=1:0:+550MiB --typecode=1:ef00 --change-name=1:EFI \
        --new=2:0:0       --typecode=2:8300 --change-name=2:cryptroot \
          $DRIVE
-mkfs.fat -F32 -n EFI $DRIVE\1
+
+mkfs.fat -F32 -n EFI $PARTBOOT
 
 printf \
 "
 PW for setting up encryption
 "
-cryptsetup -y -v luksFormat $DRIVE\2
+cryptsetup -y -v luksFormat $PARTROOT
 printf \
 "
 PW for opening encrypted dirve
 "
-cryptsetup open $DRIVE\2 cryptroot
+cryptsetup open $PARTROOT cryptroot
 
 mkfs.ext4 /dev/mapper/cryptroot
 mount /dev/mapper/cryptroot /mnt
 mkdir /mnt/boot
-mount $DRIVE\1 /mnt/boot
+mount $PARTBOOT /mnt/boot
 
 #-------- Install
 pacstrap /mnt alsa-oss alsa-utils base base-devel dmenu dunst git gptfdisk \
