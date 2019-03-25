@@ -19,11 +19,11 @@ read DRIVE
 
 re='[0-9]'
 if ! [[ ${DRIVE: -1} =~ $re ]] ; then
-    PARTBOOT=$DRIVE\p1
-    PARTROOT=$DRIVE\p2
-else
     PARTBOOT=$DRIVE\1
     PARTROOT=$DRIVE\2
+else
+    PARTBOOT=$DRIVE\p1
+    PARTROOT=$DRIVE\p2
 fi
 
 #tell inside_chroot the drivename
