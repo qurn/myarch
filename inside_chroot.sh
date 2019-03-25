@@ -16,10 +16,10 @@ DRIVENAME_REPLACE
 re='[0-9]'
 if ! [[ ${DRIVE: -1} =~ $re ]] ; then
     PARTBOOT=$DRIVE\p1
-    PARTBOOT=$DRIVE\p2
+    PARTROOT=$DRIVE\p2
 else
     PARTBOOT=$DRIVE\1
-    PARTBOOT=$DRIVE\2
+    PARTROOT=$DRIVE\2
 fi
 
 printf \
@@ -57,8 +57,8 @@ select bs in "bootctl" "syslinux"; do
             default arch" \
             > /boot/loader/loader.conf
             
-            CRYPTUUID="$(blkid $PARTBOOT)"
-            
+            CRYPTUUID="$(blkid -o value -s UUID $PARTROOT)"
+
             pacman -Sy --noconfirm intel-ucode
 	    
             printf \
@@ -66,12 +66,8 @@ select bs in "bootctl" "syslinux"; do
             linux /vmlinuz-linux
             initrd /intel-ucode.img
             initrd /initramfs-linux.img
-            options cryptdevice=UUID=  CRYPTUUID  :cryptroot root=/dev/mapper/cryptroot quiet rw" \
-
-		    $CRYPTUUID
-
+            options cryptdevice=UUID=$CRYPTUUID:cryptroot root=/dev/mapper/cryptroot quiet rw" \
             > /boot/loader/entries/arch.conf
-            vim /boot/loader/entries/arch.conf
 
             break;;
         syslinux ) 
@@ -87,7 +83,7 @@ select bs in "bootctl" "syslinux"; do
             
             LABEL arch
             	LINUX ../vmlinuz-linux
-            	APPEND root=$PARTBOOT rw
+            	APPEND root=$PARTROOT rw
                 APPEND root=/dev/mapper/cryptroot cryptdevice=/dev/sda2:cryptroot
             	INITRD ../initramfs-linux.img" \
             > /boot/syslinux/syslinux.cfg
@@ -175,8 +171,8 @@ while true; do
                 orage pavucontrol pidgin pidgin-libnotify pidgin-otr poppler \
                 poppler-data poppler-glib poppler-qt5 pkgfile pygtk pyqt5-common \
                 python python-matplotlib python-dbus python-dbus-common python-pep517 \
-		python-pip qutebrowser ripgrep sane system-config-printer slock tor vlc \
-		xfce4-appfinder xorg-xbacklight youtube-dl
+		        python-pip qutebrowser ripgrep sane system-config-printer slock tor vlc \
+		        xfce4-appfinder xorg-xbacklight youtube-dl
 
             systemctl enable org.cups.cupsd.service
             systemctl enable tor.service
@@ -228,9 +224,19 @@ select vlt in "virtualbox" "laptop" "tower" ; do
             gpasswd -a $USERNAME vboxsf
             break;;
         laptop ) 
-            #wifi
-            pacman -Sy --needed --noconfirm iwd
-            systemctl enable iwd
+            echo "IWD or netctl?"
+            select IN in "iwd" "netctl" ; do
+                case $IN in
+                    iwd )
+                        pacman -Sy --needed --noconfirm iwd
+                        systemctl enable iwd
+                        break;;
+                    netctl )
+                        pacman -Sy --needed --noconfirm dialog wpa_actiond wpa_supplicant wireless_tools
+                        #systemctl enable netctl-auto@wlp2s0.service
+                        break;;
+                esac
+            done
             break;;
         tower ) 
             systemctl enable dhcpcd.service

@@ -55,7 +55,7 @@ mount $PARTBOOT /mnt/boot
 
 #-------- Install
 pacstrap /mnt alsa-oss alsa-utils base base-devel dmenu dunst git gptfdisk \
-gvfs-mtp gvim iw iwd libmtp mtools ranger rxvt-unicode ttf-dejavu ttf-hannom \
+gvfs-mtp gvim iw libmtp mtools ranger rxvt-unicode ttf-dejavu ttf-hannom \
 urxvt-perls wget xorg-server xorg-xinit
 
 #-------- Setup
