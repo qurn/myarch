@@ -139,22 +139,19 @@ snd-mixer-oss" \
 sed -i "s/^#Color/Color/g" /etc/pacman.conf
 
 #-------- git
-sudo -u $USERNAME mkdir /home/$USERNAME/build
-sudo -u $USERNAME mkdir /home/$USERNAME/build/suckless
-
-cd /home/$USERNAME/build/suckless
-sudo -u $USERNAME git clone https://github.com/qurn/mydwm.git
+cd /tmp
+git clone https://github.com/qurn/mydwm.git
 cd mydwm
 make clean install
 
-cd /home/$USERNAME/build/suckless
-sudo -u $USERNAME git clone https://github.com/qurn/myslstatus.git
+cd ..
+git clone https://github.com/qurn/myslstatus.git
 cd myslstatus
-sudo -u $USERNAME vim config.h
+vim config.h
 make clean install
 
-cd /home/$USERNAME/build
-sudo -u $USERNAME git clone https://github.com/qurn/dotfiles.git
+cd ..
+git clone https://github.com/qurn/dotfiles.git
 cd dotfiles
 sudo -u $USERNAME bash move_files.sh
 
@@ -184,7 +181,7 @@ while true; do
             sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
             cd yay
             sudo -u $USERNAME makepkg -sri --noconfirm
-            sudo -u $USERNAME yay -S --noconfirm epson-inkjet-printer-escpr imagescan preload task-spooler xbanish
+            sudo -u $USERNAME yay -S --noconfirm epson-inkjet-printer-escpr imagescan preload task-spooler urxvt-resize-font-git xbanish
             systemctl enable preload.service
             break;;
         [Nn]* ) 
@@ -229,10 +226,10 @@ select vlt in "virtualbox" "laptop" "tower" ; do
                 case $IN in
                     iwd )
                         pacman -Sy --needed --noconfirm iwd
-                        systemctl enable iwd
+                        systemctl enable iwd.service
                         break;;
                     netctl )
-                        pacman -Sy --needed --noconfirm dialog wpa_actiond wpa_supplicant wireless_tools
+                        pacman -Sy --needed --noconfirm dialog wpa_supplicant wireless_tools
                         #systemctl enable netctl-auto@wlp2s0.service
                         break;;
                 esac
