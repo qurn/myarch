@@ -177,8 +177,8 @@ while true; do
             pkgfile -u
 
             #-------- aur helper
-            cd /home/$USERNAME/build
-            sudo -u $USERNAME git clone https://aur.archlinux.org/yay.git
+            cd /tmp
+            git clone https://aur.archlinux.org/yay.git
             cd yay
             sudo -u $USERNAME makepkg -sri --noconfirm
             sudo -u $USERNAME yay -S --noconfirm epson-inkjet-printer-escpr imagescan preload task-spooler urxvt-resize-font-git xbanish
