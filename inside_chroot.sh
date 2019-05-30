@@ -175,6 +175,8 @@ while true; do
             systemctl enable tor.service
             gsettings set org.nemo.desktop show-desktop-icons false
             pkgfile -u
+            printf "[Unit]\nDescription=Lock X session using slock for user %i\nBefore=sleep.target\n\n[Service]\nUser=%i\nEnvironment=DISPLAY=:0\nExecStartPre=/usr/bin/xset dpms force suspend\nExecStart=/usr/bin/slock\n\n[Install]\nWantedBy=sleep.target" > /etc/systemd/system/slock@.service
+            systemctl enable slock@$USERNAME\.service
 
             #-------- aur helper
             cd /tmp
