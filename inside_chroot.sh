@@ -155,6 +155,9 @@ git clone https://github.com/qurn/dotfiles.git
 cd dotfiles
 sudo -u $USERNAME bash move_files.sh
 
+#-------- timesynchonisation
+systemctl enable systemd-timesyncd.service
+
 ##-------- additional services
 while true; do
     read -p $'Add big software? Y/N\n' yn
